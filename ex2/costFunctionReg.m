@@ -18,8 +18,19 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+h = sigmoid(X * theta);
+error = log(h) .* -y - log(1 - h) .* (1 - y);
+regularization = lambda * (sum(theta(2:end,:) .^ 2)) / 2 / m;
+J = sum(error) / m + regularization;
 
-
+for j = 1:length(theta)
+    h = sigmoid(X * theta);
+    if j == 1
+        grad(j, 1) = ((h - y)' * X(:,j)) / m;
+    else
+        grad(j, 1) = ((h - y)' * X(:,j)) / m + lambda * theta(j, :) / m;
+    end
+end
 
 
 % =============================================================
