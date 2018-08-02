@@ -21,11 +21,14 @@ grad = zeros(size(theta));
 %
 
 
+h = sigmoid(X * theta);
+error = log(h) .* -y - log(1 - h) .* (1 - y);
+J = sum(error) / m;
 
-
-
-
-
+for j = 1:length(theta)
+    h = sigmoid(X * theta);
+    grad(j, 1) = ((h - y)' * X(:,j)) / m;
+end
 
 % =============================================================
 
