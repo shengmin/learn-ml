@@ -37,14 +37,15 @@ grad = zeros(size(theta));
 %
 
 
+h = sigmoid(X * theta);
+error = -y .* log(h) - (1 - y) .* log(1 - h);
+regularization = lambda * sum(theta(2:end, :) .^ 2) / 2 / m;
+J = sum(error) / m + regularization;
 
-
-
-
-
-
-
-
+grad = X' * (sigmoid(X * theta) - y) / m;
+gradient_r = lambda * theta / m;
+gradient_r(1) = 0;
+grad = grad + gradient_r;
 % =============================================================
 
 grad = grad(:);
